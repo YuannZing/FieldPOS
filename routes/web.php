@@ -3,6 +3,7 @@
 use App\Http\Controllers\{
     DashboardController,
     KategoriController,
+    KategoriLapanganController, // Tambahkan ini
     LaporanController,
     ProdukController,
     MemberController,
@@ -14,6 +15,8 @@ use App\Http\Controllers\{
     SettingController,
     SupplierController,
     UserController,
+    LapanganController,
+    JadwalLapanganController,
 };
 use Illuminate\Support\Facades\Route;
 
@@ -32,13 +35,24 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::group(['middleware' => 'level:1'], function () {
         Route::get('/kategori/data', [KategoriController::class, 'data'])->name('kategori.data');
         Route::resource('/kategori', KategoriController::class);
+
+        // Tambahkan rute untuk Kategori Lapangan
+        Route::get('/kategori_lapangan/data', [KategoriLapanganController::class, 'data'])->name('kategori_lapangan.data');
+        Route::resource('/kategori_lapangan', KategoriLapanganController::class);
+
+        Route::get('/lapangan/data', [LapanganController::class, 'data'])->name('lapangan.data');
+        Route::post('/lapangan/delete-selected', [LapanganController::class, 'deleteSelected'])->name('lapangan.delete_selected');
+        Route::resource('/lapangan', LapanganController::class);
+
+        Route::get('/jadwal/data', [JadwalLapanganController::class, 'data'])->name('jadwal.data');
+        Route::post('/jadwal/delete-selected', [JadwalLapanganController::class, 'deleteSelected'])->name('jadwal.delete_selected');
+        Route::resource('/jadwal', JadwalLapanganController::class);
 
         Route::get('/produk/data', [ProdukController::class, 'data'])->name('produk.data');
         Route::post('/produk/delete-selected', [ProdukController::class, 'deleteSelected'])->name('produk.delete_selected');
@@ -102,3 +116,4 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/profil', [UserController::class, 'updateProfil'])->name('user.update_profil');
     });
 });
+

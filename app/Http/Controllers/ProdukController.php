@@ -27,7 +27,7 @@ class ProdukController extends Controller
             ->select('produk.*', 'nama_kategori')
             // ->orderBy('kode_produk', 'asc')
             ->get();
-
+        
         return datatables()
             ->of($produk)
             ->addIndexColumn()

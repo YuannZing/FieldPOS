@@ -26,12 +26,22 @@
             <li class="header">MASTER</li>
             <li>
                 <a href="{{ route('kategori.index') }}">
-                    <i class="fa fa-cube"></i> <span>Kategori</span>
+                    <i class="fa fa-cube"></i> <span>Kategori Produk</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('kategori_lapangan.index') }}">
+                    <i class="fa fa-cube"></i> <span>Kategori Lapangan</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('produk.index') }}">
                     <i class="fa fa-cubes"></i> <span>Produk</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('lapangan.index') }}">
+                    <i class="fa fa-cubes"></i> <span>Lapangan</span>
                 </a>
             </li>
             <li>

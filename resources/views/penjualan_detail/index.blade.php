@@ -33,7 +33,7 @@
 
 @section('breadcrumb')
     @parent
-    <li class="active">Transaksi Penjaualn</li>
+    <li class="active">Transaksi Penjaualan</li>
 @endsection
 
 @section('content')
@@ -59,6 +59,23 @@
                     </div>
                 </form>
 
+                <form class="form-lapangan">
+                    @csrf
+                    <div class="form-group row">
+                        <label for="nama_lapangan" class="col-lg-2">Nama Lapangan</label>
+                        <div class="col-lg-5">
+                            <div class="input-group">
+                                <input type="hidden" name="id_penjualan" id="id_penjualan" value="{{ $id_penjualan }}">
+                                <input type="hidden" name="id_lapangan" id="id_lapangan">
+                                <input type="text" class="form-control" name="nama_lapangan" id="nama_lapangan">
+                                <span class="input-group-btn">
+                                    <button onclick="tampilLapangan()" class="btn btn-info btn-flat" type="button"><i class="fa fa-arrow-right"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
                 <table class="table table-stiped table-bordered table-penjualan">
                     <thead>
                         <th width="5%">No</th>
@@ -68,6 +85,16 @@
                         <th width="15%">Jumlah</th>
                         <th>Diskon</th>
                         <th>Subtotal</th>
+                        <th width="15%"><i class="fa fa-cog"></i></th>
+                    </thead>
+                </table>
+
+                <table class="table table-stiped table-bordered table-lapangan">
+                    <thead>
+                        <th width="5%">No</th>
+                        <th>Nama Lapangan</th>
+                        <th>Harga</th>
+                        <th width="15%">Durasi</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </thead>
                 </table>
@@ -142,6 +169,7 @@
 </div>
 
 @includeIf('penjualan_detail.produk')
+@includeIf('penjualan_detail.lapangan')
 @includeIf('penjualan_detail.member')
 @endsection
 
@@ -257,10 +285,11 @@
                 $('#kode_produk').focus();
                 table.ajax.reload(() => loadForm($('#diskon').val()));
             })
-            .fail(errors => {
-                alert('Tidak dapat menyimpan data');
-                return;
-            });
+            .fail((xhr, status, error) => {
+            console.log(xhr.responseText);  // Cek error dari server
+            alert('Tidak dapat menyimpan data');
+        });
+
     }
 
     function tampilMember() {

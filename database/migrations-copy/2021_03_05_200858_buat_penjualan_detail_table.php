@@ -17,11 +17,8 @@ class BuatPenjualanDetailTable extends Migration
             $table->increments('id_penjualan_detail');
             $table->integer('id_penjualan');
             $table->integer('id_produk');
-            $table->unsignedInteger('id_lapangan');
             $table->integer('harga_jual');
             $table->integer('jumlah');
-            $table->integer('harga_sewa');
-            $table->integer('durasi');
             $table->tinyInteger('diskon')->default(0);
             $table->integer('subtotal');
             $table->timestamps();
