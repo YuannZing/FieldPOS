@@ -26,12 +26,22 @@
             <li class="header">MASTER</li>
             <li>
                 <a href="{{ route('kategori.index') }}">
-                    <i class="fa fa-cube"></i> <span>Kategori</span>
+                    <i class="fa fa-cube"></i> <span>Kategori Produk</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('kategori_lapangan.index') }}">
+                    <i class="fa fa-cube"></i> <span>Kategori Lapangan</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('produk.index') }}">
                     <i class="fa fa-cubes"></i> <span>Produk</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('lapangan.index') }}">
+                    <i class="fa fa-cubes"></i> <span>Lapangan</span>
                 </a>
             </li>
             <li>
@@ -68,6 +78,21 @@
             <li>
                 <a href="{{ route('transaksi.baru') }}">
                     <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Baru</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('penyewaan.index') }}">
+                    <i class="fa fa-upload"></i> <span>Penyewaan</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('transaksi-penyewaan.index') }}">
+                    <i class="fa fa-cart-arrow-down"></i> <span>transaksi-penyewaan Aktif</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('transaksi-penyewaan.baru') }}">
+                    <i class="fa fa-cart-arrow-down"></i> <span>transaksi-penyewaan Baru</span>
                 </a>
             </li>
             <li class="header">REPORT</li>

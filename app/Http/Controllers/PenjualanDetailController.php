@@ -112,6 +112,7 @@ class PenjualanDetailController extends Controller
         return response(null, 204);
     }
 
+
     public function loadForm($diskon = 0, $total = 0, $diterima = 0)
     {
         $bayar   = $total - ($diskon / 100 * $total);
