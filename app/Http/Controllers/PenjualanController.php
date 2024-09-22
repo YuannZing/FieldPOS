@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lapangan;
 use App\Models\Penjualan;
 use App\Models\PenjualanDetail;
 use App\Models\Produk;
@@ -23,6 +24,9 @@ class PenjualanController extends Controller
         return datatables()
             ->of($penjualan)
             ->addIndexColumn()
+            ->addColumn('durasi', function ($penjualan) {
+                return format_uang($penjualan->durasi);
+            })
             ->addColumn('total_item', function ($penjualan) {
                 return format_uang($penjualan->total_item);
             })
@@ -37,7 +41,7 @@ class PenjualanController extends Controller
             })
             ->addColumn('kode_member', function ($penjualan) {
                 $member = $penjualan->member->kode_member ?? '';
-                return '<span class="label label-success">'. $member .'</spa>';
+                return '<span class="label label-success">'. $member .'</span>';
             })
             ->editColumn('diskon', function ($penjualan) {
                 return $penjualan->diskon . '%';
@@ -66,6 +70,7 @@ class PenjualanController extends Controller
         $penjualan->diskon = 0;
         $penjualan->bayar = 0;
         $penjualan->diterima = 0;
+        $penjualan->durasi = 0;
         $penjualan->id_user = auth()->id();
         $penjualan->save();
 
@@ -75,6 +80,19 @@ class PenjualanController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'id_penjualan' => 'required|exists:penjualans,id_penjualan',
+            'total_item' => 'required|numeric|min:0',
+            'total' => 'required|numeric|min:0',
+            'diskon' => 'required|numeric|min:0',
+            'bayar' => 'required|numeric|min:0',
+            'diterima' => 'required|numeric|min:0',
+            'durasi' => 'required|numeric|min:0',
+            'id_member' => 'nullable|exists:members,id_member',
+            'id_lapangan' => 'nullable|exists:lapangans,id_lapangan',
+            'jumlah' => 'nullable|numeric|min:0'
+        ]);
+
         $penjualan = Penjualan::findOrFail($request->id_penjualan);
         $penjualan->id_member = $request->id_member;
         $penjualan->total_item = $request->total_item;
@@ -82,6 +100,7 @@ class PenjualanController extends Controller
         $penjualan->diskon = $request->diskon;
         $penjualan->bayar = $request->bayar;
         $penjualan->diterima = $request->diterima;
+        $penjualan->durasi = $request->durasi;
         $penjualan->update();
 
         $detail = PenjualanDetail::where('id_penjualan', $penjualan->id_penjualan)->get();
@@ -89,9 +108,22 @@ class PenjualanController extends Controller
             $item->diskon = $request->diskon;
             $item->update();
 
-            $produk = Produk::find($item->id_produk);
-            $produk->stok -= $item->jumlah;
-            $produk->update();
+            if ($item->id_produk) {
+                $produk = Produk::find($item->id_produk);
+                if ($produk) {
+                    $produk->stok -= $item->jumlah;
+                    $produk->update();
+                }
+            }
+        }
+
+        // Handle Lapangan
+        if ($request->id_lapangan) {
+            $lapangan = Lapangan::find($request->id_lapangan);
+            if ($lapangan) {
+                $lapangan->stok -= $request->jumlah ?? 0;
+                $lapangan->update();
+            }
         }
 
         return redirect()->route('transaksi.selesai');
@@ -126,15 +158,26 @@ class PenjualanController extends Controller
     public function destroy($id)
     {
         $penjualan = Penjualan::find($id);
-        $detail    = PenjualanDetail::where('id_penjualan', $penjualan->id_penjualan)->get();
+        $detail = PenjualanDetail::where('id_penjualan', $penjualan->id_penjualan)->get();
         foreach ($detail as $item) {
-            $produk = Produk::find($item->id_produk);
-            if ($produk) {
-                $produk->stok += $item->jumlah;
-                $produk->update();
+            if ($item->id_produk) {
+                $produk = Produk::find($item->id_produk);
+                if ($produk) {
+                    $produk->stok += $item->jumlah;
+                    $produk->update();
+                }
             }
 
             $item->delete();
+        }
+
+        // Handle Lapangan
+        if ($penjualan->id_lapangan) {
+            $lapangan = Lapangan::find($penjualan->id_lapangan);
+            if ($lapangan) {
+                $lapangan->stok += $penjualan->jumlah; // Assuming jumlah is available
+                $lapangan->update();
+            }
         }
 
         $penjualan->delete();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use App\Models\Member;
 use App\Models\Setting;
 use App\Models\Lapangan;
@@ -160,4 +161,33 @@ class PenyewaanController extends Controller
         $pdf->setPaper(0, 0, 609, 440, 'potrait');
         return $pdf->stream('Transaksi-'. date('Y-m-d-his') .'.pdf');
     }
+=======
+use App\Models\Penyewaan;
+use Illuminate\Http\Request;
+
+class PenyewaanController extends Controller
+{
+    // Menampilkan daftar penyewaan
+    public function index()
+    {
+        $penyewaan = Penyewaan::with('jadwal')->get();
+        return view('penyewaan.index', compact('penyewaan'));
+    }
+
+    // Menyimpan penyewaan baru
+    public function store(Request $request)
+    {
+        $request->validate([
+            'id_jadwal' => 'required|exists:jadwal_lapangan,id_jadwal',
+            'nama_penyewa' => 'required|string|max:255',
+            'nomer_penyewa' => 'required|string|max:15', // Sesuaikan dengan tipe data yang baru
+        ]);
+
+        Penyewaan::create($request->all());
+
+        return redirect()->route('penyewaan.index')->with('success', 'Penyewaan berhasil ditambahkan');
+    }
+
+    // Metode lainnya seperti edit, update, delete, dll.
+>>>>>>> b3b79ae42465dcf566e62d81f4ec12d79b17bb41
 }

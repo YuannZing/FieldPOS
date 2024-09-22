@@ -4,8 +4,11 @@ use App\Http\Controllers\{
     DashboardController,
     KategoriController,
     KategoriLapanganController, // Tambahkan ini
+<<<<<<< HEAD
     PenyewaanController,
     PenyewaanDetailController,
+=======
+>>>>>>> b3b79ae42465dcf566e62d81f4ec12d79b17bb41
     LaporanController,
     ProdukController,
     MemberController,
@@ -136,3 +139,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/profil', [UserController::class, 'updateProfil'])->name('user.update_profil');
     });
 });
+<<<<<<< HEAD
+=======
+
+>>>>>>> b3b79ae42465dcf566e62d81f4ec12d79b17bb41
