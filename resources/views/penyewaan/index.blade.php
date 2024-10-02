@@ -19,7 +19,6 @@
                         <th width="5%">No</th>
                         <th>Tanggal</th>
                         <th>Kode Member</th>
-                        <th>Total Lapangan</th>
                         <th>Total Durasi</th>
                         <th>Total Harga</th>
                         <th>Kasir</th>
@@ -51,7 +50,6 @@
                 {data: 'DT_RowIndex', searchable: false, sortable: false},
                 {data: 'tanggal'},
                 {data: 'kode_member'},
-                {data: 'total_lapangan'}, // Mengganti total item menjadi total lapangan
                 {data: 'total_durasi'},  // Menambahkan kolom durasi
                 {data: 'total_harga'},
                 {data: 'kasir'},
@@ -81,6 +79,7 @@
     }
 
     function deleteData(url) {
+        console.log(url);
         if (confirm('Yakin ingin menghapus data terpilih?')) {
             $.post(url, {
                     '_token': $('[name=csrf-token]').attr('content'),

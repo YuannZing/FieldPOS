@@ -51,7 +51,7 @@
                             <div class="tampil-logo"></div>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row hidden">
                         <label for="path_kartu_member" class="col-lg-2 control-label">Kartu Member</label>
                         <div class="col-lg-4">
                             <input type="file" name="path_kartu_member" class="form-control" id="path_kartu_member"

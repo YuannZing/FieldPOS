@@ -13,8 +13,8 @@ class PenyewaanDetail extends Model
     protected $primaryKey = 'id_penyewaan_detail';
     protected $guarded = [];
 
-    public function lapangan()
+    public function detail()
     {
-        return $this->hasOne(Lapangan::class, 'id_lapangan', 'id_lapangan');
+        return $this->hasMany(Lapangan::class, 'id_lapangan', 'id_lapangan');
     }
 }

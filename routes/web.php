@@ -3,12 +3,9 @@
 use App\Http\Controllers\{
     DashboardController,
     KategoriController,
-    KategoriLapanganController, // Tambahkan ini
-<<<<<<< HEAD
     PenyewaanController,
+    KategoriLapanganController, // Tambahkan ini
     PenyewaanDetailController,
-=======
->>>>>>> b3b79ae42465dcf566e62d81f4ec12d79b17bb41
     LaporanController,
     ProdukController,
     MemberController,
@@ -93,7 +90,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/penyewaan/data', [PenyewaanController::class, 'data'])->name('penyewaan.data');
         Route::get('/penyewaan', [PenyewaanController::class, 'index'])->name('penyewaan.index');
         Route::get('/penyewaan/{id}', [PenyewaanController::class, 'show'])->name('penyewaan.show');
-        Route::delete('/penyewaan/{id}', [PenyewaanController::class, 'destroy'])->name('penyewaan.destroy');
+        Route::delete('penyewaan/{id}', [PenyewaanController::class, 'destroy'])->name('penyewaan.destroy');
+        // Route::delete('/penyewaan/{id}', [PenyewaanController::class, 'destroy'])->name('penyewaan.destroy');
     });
 
     Route::group(['middleware' => 'level:1,2'], function () {
@@ -109,15 +107,15 @@ Route::group(['middleware' => 'auth'], function () {
             ->except('create', 'show', 'edit');
 
         // Rute untuk transaksi penyewaan (mirip dengan transaksi penjualan)
-        Route::get('/transaksi-penyewaan/baru', [PenyewaanController::class, 'create'])->name('transaksi-penyewaan.baru');
-        Route::post('/transaksi-penyewaan/simpan', [PenyewaanController::class, 'store'])->name('transaksi-penyewaan.simpan');
-        Route::get('/transaksi-penyewaan/selesai', [PenyewaanController::class, 'selesai'])->name('transaksi-penyewaan.selesai');
-        Route::get('/transaksi-penyewaan/nota-kecil', [PenyewaanController::class, 'notaKecil'])->name('transaksi-penyewaan.nota_kecil');
-        Route::get('/transaksi-penyewaan/nota-besar', [PenyewaanController::class, 'notaBesar'])->name('transaksi-penyewaan.nota_besar');
+        Route::get('/transaksi_penyewaan/baru', [PenyewaanController::class, 'create'])->name('transaksi_penyewaan.baru');
+        Route::post('/transaksi_penyewaan/simpan', [PenyewaanController::class, 'store'])->name('transaksi_penyewaan.simpan');
+        Route::get('/transaksi_penyewaan/selesai', [PenyewaanController::class, 'selesai'])->name('transaksi_penyewaan.selesai');
+        Route::get('/transaksi_penyewaan/nota-kecil', [PenyewaanController::class, 'notaKecil'])->name('transaksi_penyewaan.nota_kecil');
+        Route::get('/transaksi_penyewaan/nota-besar', [PenyewaanController::class, 'notaBesar'])->name('transaksi_penyewaan.nota_besar');
 
-        Route::get('/transaksi-penyewaan/{id}/data', [PenyewaanDetailController::class, 'data'])->name('transaksi-penyewaan.data');
-        Route::get('/transaksi-penyewaan/loadform/{diskon}/{total}/{diterima}', [PenyewaanDetailController::class, 'loadForm'])->name('transaksi-penyewaan.load_form');
-        Route::resource('/transaksi-penyewaan', PenyewaanDetailController::class)
+        Route::get('/transaksi_penyewaan/{id}/data', [PenyewaanDetailController::class, 'data'])->name('transaksi_penyewaan.data');
+        Route::get('/transaksi_penyewaan/loadform/{diskon}/{total}/{diterima}', [PenyewaanDetailController::class, 'loadForm'])->name('transaksi_penyewaan.load_form');
+        Route::resource('/transaksi_penyewaan', PenyewaanDetailController::class)
             ->except('create', 'show', 'edit');
     });
 
@@ -139,7 +137,3 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/profil', [UserController::class, 'updateProfil'])->name('user.update_profil');
     });
 });
-<<<<<<< HEAD
-=======
-
->>>>>>> b3b79ae42465dcf566e62d81f4ec12d79b17bb41

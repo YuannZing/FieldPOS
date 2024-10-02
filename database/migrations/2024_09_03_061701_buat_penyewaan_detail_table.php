@@ -13,9 +13,10 @@ class BuatPenyewaanDetailTable extends Migration
             $table->integer('id_penyewaan');
             $table->integer('id_lapangan');
             $table->integer('harga_sewa');
-            $table->integer('jumlah');
+            $table->integer('durasi');
             $table->tinyInteger('diskon')->default(0);
             $table->integer('subtotal');
+            $table->timestamps();
         });
     }
 

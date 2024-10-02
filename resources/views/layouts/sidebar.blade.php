@@ -24,16 +24,27 @@
 
             @if (auth()->user()->level == 1)
             <li class="header">MASTER</li>
-            <li>
-                <a href="{{ route('kategori.index') }}">
-                    <i class="fa fa-cube"></i> <span>Kategori Produk</span>
+            <li class="treeview">
+                <a href="#">
+                  <i class="fa fa-cube"></i> <span>Kategori</span>
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
                 </a>
-            </li>
-            <li>
-                <a href="{{ route('kategori_lapangan.index') }}">
-                    <i class="fa fa-cube"></i> <span>Kategori Lapangan</span>
-                </a>
-            </li>
+                <ul class="treeview-menu">
+                    <li class="active">
+                        <a href="{{ route('kategori.index') }}">
+                            <i class="fa fa-circle-o"></i> <span>Kategori Produk</span>
+                        </a>
+                    </li>
+                    
+                    <li class="active">
+                        <a href="{{ route('kategori_lapangan.index') }}">
+                            <i class="fa fa-circle-o"></i> <span>Kategori Lapangan</span>
+                        </a>
+                    </li>
+                </ul>
+              </li>
             <li>
                 <a href="{{ route('produk.index') }}">
                     <i class="fa fa-cubes"></i> <span>Produk</span>
@@ -41,7 +52,7 @@
             </li>
             <li>
                 <a href="{{ route('lapangan.index') }}">
-                    <i class="fa fa-cubes"></i> <span>Lapangan</span>
+                    <i class="fa fa-futbol-o"></i> <span>Lapangan</span>
                 </a>
             </li>
             <li>
@@ -71,30 +82,53 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('transaksi.index') }}">
-                    <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Aktif</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('transaksi.baru') }}">
-                    <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Baru</span>
-                </a>
-            </li>
-            <li>
                 <a href="{{ route('penyewaan.index') }}">
                     <i class="fa fa-upload"></i> <span>Penyewaan</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ route('transaksi-penyewaan.index') }}">
-                    <i class="fa fa-cart-arrow-down"></i> <span>transaksi-penyewaan Aktif</span>
+            <li class="treeview">
+                <a href="#">
+                  <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Aktif</span>
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
                 </a>
+                <ul class="treeview-menu">
+                    <li class="active">
+                        <a href="{{ route('transaksi.index') }}">
+                            <i class="fa fa-circle-o"></i> <span>Transaksi Produk</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="{{ route('transaksi_penyewaan.index') }}">
+                            <i class="fa fa-circle-o"></i> <span>Transaksi Lapangan</span>
+                        </a>
+                    </li>
+                </ul>
+              </li>
+            <li>
+
+            <li class="treeview">
+                <a href="#">
+                  <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Baru</span>
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="active">
+                        <a href="{{ route('transaksi.baru') }}">
+                            <i class="fa fa-circle-o"></i> <span>Transaksi Produk</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="{{ route('transaksi_penyewaan.baru') }}">
+                            <i class="fa fa-circle-o"></i> <span>transaksi Lapangan</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li>
-                <a href="{{ route('transaksi-penyewaan.baru') }}">
-                    <i class="fa fa-cart-arrow-down"></i> <span>transaksi-penyewaan Baru</span>
-                </a>
-            </li>
             <li class="header">REPORT</li>
             <li>
                 <a href="{{ route('laporan.index') }}">
@@ -113,16 +147,47 @@
                 </a>
             </li>
             @else
-            <li>
-                <a href="{{ route('transaksi.index') }}">
-                    <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Aktif</span>
+            <li class="treeview">
+                <a href="#">
+                  <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Aktif</span>
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
                 </a>
-            </li>
+                <ul class="treeview-menu">
+                    <li class="active">
+                        <a href="{{ route('transaksi.index') }}">
+                            <i class="fa fa-circle-o"></i> <span>Transaksi Produk</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="{{ route('transaksi_penyewaan.index') }}">
+                            <i class="fa fa-circle-o"></i> <span>Transaksi Lapangan</span>
+                        </a>
+                    </li>
+                </ul>
+              </li>
             <li>
-                <a href="{{ route('transaksi.baru') }}">
-                    <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Baru</span>
-                </a>
-            </li>
+                <li class="treeview">
+                    <a href="#">
+                      <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Baru</span>
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="active">
+                            <a href="{{ route('transaksi.baru') }}">
+                                <i class="fa fa-circle-o"></i> <span>Transaksi Produk</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="{{ route('transaksi_penyewaan.baru') }}">
+                                <i class="fa fa-circle-o"></i> <span>transaksi Lapangan</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             @endif
         </ul>
     </section>

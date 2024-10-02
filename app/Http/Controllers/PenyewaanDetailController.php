@@ -9,6 +9,7 @@ use App\Models\Lapangan;
 use App\Models\Penyewaan;
 use Illuminate\Http\Request;
 use App\Models\PenyewaanDetail;
+use Illuminate\Support\Facades\Log;
 
 class PenyewaanDetailController extends Controller
 {
@@ -26,7 +27,7 @@ class PenyewaanDetailController extends Controller
             return view('penyewaan_detail.index', compact('lapangan', 'member', 'diskon', 'id_penyewaan', 'penyewaan', 'memberSelected'));
         } else {
             if (auth()->user()->level == 1) {
-                return redirect()->route('transaksi.baru');
+                return redirect()->route('transaksi_penyewaan.baru');
             } else {
                 return redirect()->route('home');
             }
@@ -39,8 +40,9 @@ class PenyewaanDetailController extends Controller
             ->where('id_penyewaan', $id)
             ->get();
 
+            Log::info("Request for penyewaan data with ID: $id");
+        
         $data = array();
-        $total = 0;
         $total = 0;
 
         foreach ($detail as $item) {
@@ -50,8 +52,9 @@ class PenyewaanDetailController extends Controller
             $row['durasi']  = '<input type="number" class="form-control input-sm quantity" data-id="' . $item->id_penyewaan_detail . '" value="' . $item->durasi . '">';
             $row['subtotal']    = 'Rp. ' . format_uang($item->subtotal);
             $row['aksi']        = '<div class="btn-group">
-                                    <button onclick="deleteData(`' . route('transaksi.destroy', $item->id_penyewaan_detail) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                                    <button onclick="deleteData(`' . route('transaksi_penyewaan.destroy', $item->id_penyewaan_detail) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                                 </div>';
+            
             $data[] = $row;
 
             $total += $item->harga_sewa * $item->durasi;
@@ -59,7 +62,7 @@ class PenyewaanDetailController extends Controller
         $data[] = [
             'nama_lapangan' => '',
             'harga_sewa'    => '',
-            'durasi'    => '',
+            'durasi'        => '',
             'subtotal'      => '',
             'aksi'          => '',
         ];
@@ -113,9 +116,9 @@ class PenyewaanDetailController extends Controller
             'totalrp' => format_uang($total),
             'bayar' => $bayar,
             'bayarrp' => format_uang($bayar),
-            'terbilang' => ucwords(terbilang($bayar) . ' Rupiah'),
+            'terbilang' => ucwords(terbilang($bayar). ' Rupiah'),
             'kembalirp' => format_uang($kembali),
-            'kembali_terbilang' => ucwords(terbilang($kembali) . ' Rupiah'),
+            'kembali_terbilang' => ucwords(terbilang($kembali). ' Rupiah'),
         ];
 
         return response()->json($data);

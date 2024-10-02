@@ -13,7 +13,7 @@ class PenjualanDetail extends Model
     protected $primaryKey = 'id_penjualan_detail';
     protected $guarded = [];
     protected $fillable = [
-        'id_penjualan', 'id_lapangan', 'id_produk', 'harga_jual', 'harga_sewa', 'jumlah', 'durasi', 'diskon', 'subtotal'
+        'id_penjualan', 'id_produk', 'harga_jual', 'jumlah', 'diskon', 'subtotal'
     ];
 
     public function produk()
@@ -21,8 +21,4 @@ class PenjualanDetail extends Model
         return $this->hasOne(Produk::class, 'id_produk', 'id_produk');
     }
 
-    public function lapangan()
-    {
-        return $this->hasOne(Lapangan::class, 'id_lapangan', 'id_lapangan');
-    }
 }

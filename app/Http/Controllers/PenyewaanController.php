@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
+use PDF;
 use App\Models\Member;
 use App\Models\Setting;
 use App\Models\Lapangan;
 use App\Models\Penyewaan;
-use App\Models\PenyewaanDetail;
 use Illuminate\Http\Request;
-use PDF;
+use App\Models\PenyewaanDetail;
+use Illuminate\Support\Facades\Log;
+
 
 class PenyewaanController extends Controller
 {
@@ -41,6 +42,9 @@ class PenyewaanController extends Controller
                 $member = $penyewaan->member->kode_member ?? '';
                 return '<span class="label label-success">' . $member . '</span>';
             })
+            ->editColumn('diskon', function ($penyewaan) {
+                return $penyewaan->diskon . '%';
+            })
             ->editColumn('kasir', function ($penyewaan) {
                 return $penyewaan->user->name ?? '';
             })
@@ -67,7 +71,7 @@ class PenyewaanController extends Controller
         $penyewaan->save();
 
         session(['id_penyewaan' => $penyewaan->id_penyewaan]);
-        return redirect()->route('transaksi-penyewaan.index');
+        return redirect()->route('transaksi_penyewaan.index');
     }
 
     public function store(Request $request)
@@ -82,12 +86,14 @@ class PenyewaanController extends Controller
 
         $detail = PenyewaanDetail::where('id_penyewaan', $penyewaan->id_penyewaan)->get();
         foreach ($detail as $item) {
+            $item->diskon = $request->diskon;
+            $item->update();
             $lapangan = Lapangan::find($item->id_lapangan);
-            $lapangan->status = 'available'; // Misalnya update status lapangan setelah selesai disewa
+            // $lapangan->status = 'available'; // Misalnya update status lapangan setelah selesai disewa
             $lapangan->update();
         }
 
-        return redirect()->route('transaksi-penyewaan.selesai');
+        return redirect()->route('transaksi_penyewaan.selesai');
     }
 
     public function show($id)
@@ -113,17 +119,33 @@ class PenyewaanController extends Controller
             ->make(true);
     }
 
+    // public function destroy($id)
+    // {
+    //     $penyewaan = Penyewaan::find($id);
+    //     $detail = PenyewaanDetail::where('id_penyewaan', $penyewaan->id_penyewaan)->get();
+    //     foreach ($detail as $item) {
+    //         $item->delete();
+    //     }
+    //     $penyewaan->delete();
+
+    //     return response(null, 204);
+    // }
     public function destroy($id)
-    {
-        $penyewaan = Penyewaan::find($id);
+{
+    try {
+        $penyewaan = Penyewaan::findOrFail($id);
         $detail = PenyewaanDetail::where('id_penyewaan', $penyewaan->id_penyewaan)->get();
         foreach ($detail as $item) {
             $item->delete();
         }
         $penyewaan->delete();
-
-        return response(null, 204);
+        return response()->json(['success' => 'Data berhasil dihapus'], 200);
+    } catch (\Exception $e) {
+        Log::error('Error saat menghapus data: ' . $e->getMessage());
+        return response()->json(['error' => 'Terjadi kesalahan saat menghapus data'], 500);
     }
+}
+
 
     public function selesai()
     {
@@ -161,33 +183,4 @@ class PenyewaanController extends Controller
         $pdf->setPaper(0, 0, 609, 440, 'potrait');
         return $pdf->stream('Transaksi-'. date('Y-m-d-his') .'.pdf');
     }
-=======
-use App\Models\Penyewaan;
-use Illuminate\Http\Request;
-
-class PenyewaanController extends Controller
-{
-    // Menampilkan daftar penyewaan
-    public function index()
-    {
-        $penyewaan = Penyewaan::with('jadwal')->get();
-        return view('penyewaan.index', compact('penyewaan'));
-    }
-
-    // Menyimpan penyewaan baru
-    public function store(Request $request)
-    {
-        $request->validate([
-            'id_jadwal' => 'required|exists:jadwal_lapangan,id_jadwal',
-            'nama_penyewa' => 'required|string|max:255',
-            'nomer_penyewa' => 'required|string|max:15', // Sesuaikan dengan tipe data yang baru
-        ]);
-
-        Penyewaan::create($request->all());
-
-        return redirect()->route('penyewaan.index')->with('success', 'Penyewaan berhasil ditambahkan');
-    }
-
-    // Metode lainnya seperti edit, update, delete, dll.
->>>>>>> b3b79ae42465dcf566e62d81f4ec12d79b17bb41
 }

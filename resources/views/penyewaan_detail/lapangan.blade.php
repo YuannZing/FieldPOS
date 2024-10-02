@@ -22,7 +22,7 @@
                                 <td>{{ $item->harga_sewa }}</td>
                                 <td>
                                     <a href="#" class="btn btn-primary btn-xs btn-flat"
-                                        onclick="pilihLapangan('{{ $item->id_lapangan }}', '{{ $item->kode_lapangan }}')">
+                                        onclick="pilihLapangan('{{ $item->id_lapangan }}', '{{ $item->nama_lapangan }}')">
                                         <i class="fa fa-check-circle"></i>
                                         Pilih
                                     </a>
