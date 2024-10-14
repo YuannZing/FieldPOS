@@ -13,8 +13,9 @@ class PenyewaanDetail extends Model
     protected $primaryKey = 'id_penyewaan_detail';
     protected $guarded = [];
 
-    public function detail()
+    // Perbaikan relasi ke Lapangan
+    public function lapangan()
     {
-        return $this->hasMany(Lapangan::class, 'id_lapangan', 'id_lapangan');
+        return $this->belongsTo(Lapangan::class, 'id_lapangan', 'id_lapangan');
     }
 }

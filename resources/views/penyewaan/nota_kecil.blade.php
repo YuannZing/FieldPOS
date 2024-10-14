@@ -90,6 +90,10 @@
             <td class="text-right">{{ format_uang($penyewaan->total_harga) }}</td>
         </tr>
         <tr>
+            <td>Total Durasi:</td>
+            <td class="text-right">{{ format_uang($penyewaan->total_durasi) }}</td>
+        </tr>
+        <tr>
             <td>Total Item:</td>
             <td class="text-right">{{ format_uang($penyewaan->total_item) }}</td>
         </tr>

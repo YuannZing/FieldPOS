@@ -446,27 +446,45 @@
     }
 
     // Fungsi untuk menghapus data penyewaan
+    // function deleteData(url) {
+    //     if (confirm('Yakin ingin menghapus data terpilih?')) {
+    //         $.post(url, {
+    //                 '_token': $('[name=csrf-token]').attr('content'),
+    //                 '_method': 'delete'
+    //             })
+    //             .done((response) => {eny
+    //                 table.ajax.reload(() => loadForm($('#diskon').val()));
+    //             })
+    //             .fail((errors) => {
+    //                 console.log(errors)
+    //                 alert('Tidak dapat menghapus data');
+    //                 return;
+    //             });
+    //     }
+    // }
     function deleteData(url) {
-        if (confirm('Yakin ingin menghapus data terpilih?')) {
-            $.post(url, {
-                    '_token': $('[name=csrf-token]').attr('content'),
-                    '_method': 'delete'
-                })
-                .done((response) => {
-                    table.ajax.reload(() => loadForm($('#diskon').val()));
-                })
-                .fail((errors) => {
-                    console.log(errors)
-                    alert('Tidak dapat menghapus data');
-                    return;
-                });
-        }
+    console.log('URL:', url); // Cek URL
+    if (confirm('Yakin ingin menghapus data terpilih?')) {
+        $.post(url, {
+                '_token': $('[name=csrf-token]').attr('content'),
+                '_method': 'delete'
+            })
+            .done((response) => {
+                table.ajax.reload(() => loadForm($('#diskon').val()));
+            })
+            .fail((errors) => {
+                console.log('Errors:', errors); // Log error
+                alert('Tidak dapat menghapus data');
+                return;
+            });
     }
+}
+
 
     // Fungsi untuk menghitung total dan diskon
     function loadForm(diskon = 0, diterima = 0) {
         let total = $('.total').text() || 0;  // Default ke 0 jika kosong
-        let totalItem = $('.total_item').text() || 0;
+        let totalItem = $('.total_durasi').text() || 0;
 
         $('#total').val($('.total').text());
         $('#total_durasi').val($('.total_durasi').text());

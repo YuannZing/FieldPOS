@@ -9,7 +9,7 @@ class BuatPenyewaanDetailTable extends Migration
     public function up()
     {
         Schema::create('penyewaan_detail', function (Blueprint $table) {
-            $table->increments('id_penyewaaan_detail');
+            $table->increments('id_penyewaan_detail');
             $table->integer('id_penyewaan');
             $table->integer('id_lapangan');
             $table->integer('harga_sewa');

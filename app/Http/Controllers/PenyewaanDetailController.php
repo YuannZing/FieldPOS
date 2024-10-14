@@ -39,12 +39,13 @@ class PenyewaanDetailController extends Controller
         $detail = PenyewaanDetail::with('lapangan')
             ->where('id_penyewaan', $id)
             ->get();
-
-            Log::info("Request for penyewaan data with ID: $id");
-        
+    
+        Log::info("Request for penyewaan data with ID: $id");
+    
         $data = array();
         $total = 0;
-
+        $total_durasi = 0; // untuk menyimpan total durasi sewa
+    
         foreach ($detail as $item) {
             $row = array();
             $row['nama_lapangan'] = $item->lapangan['nama_lapangan'];
@@ -54,25 +55,30 @@ class PenyewaanDetailController extends Controller
             $row['aksi']        = '<div class="btn-group">
                                     <button onclick="deleteData(`' . route('transaksi_penyewaan.destroy', $item->id_penyewaan_detail) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                                 </div>';
-            
             $data[] = $row;
-
+            // deleteData('{{ route('transaksi_penyewaan.destroy', $item->id_penyewaan_detail) }}')
+            // deleteData(`' . route('transaksi_penyewaan.destroy', $item->id_penyewaan_detail) . '`)
+            // Hitung total harga dan total durasi
             $total += $item->harga_sewa * $item->durasi;
+            $total_durasi += $item->durasi;
         }
+    
+        // Tambahkan kolom tersembunyi untuk total dan total durasi
         $data[] = [
-            'nama_lapangan' => '',
+            'nama_lapangan' => '<div class="total hide">' . $total . '</div><div class="total_durasi hide">' . $total_durasi . '</div>',
             'harga_sewa'    => '',
             'durasi'        => '',
             'subtotal'      => '',
             'aksi'          => '',
         ];
-
+    
         return datatables()
             ->of($data)
             ->addIndexColumn()
-            ->rawColumns(['aksi', 'durasi'])
+            ->rawColumns(['aksi', 'durasi', 'nama_lapangan']) // tambahkan 'nama_lapangan' ke rawColumns
             ->make(true);
     }
+    
 
     public function store(Request $request)
     {
@@ -102,11 +108,12 @@ class PenyewaanDetailController extends Controller
 
     public function destroy($id)
     {
-        $detail = PenyewaanDetail::find($id);
-        $detail->delete();
-
-        return response(null, 204);
+        $penyewaanDetail = PenyewaanDetail::findOrFail($id); // Ambil data dengan ID
+        $penyewaanDetail->delete(); // Hapus data
+    
+        return response()->json(['message' => 'Data berhasil dihapus.']);
     }
+    
 
     public function loadForm($diskon = 0, $total = 0, $diterima = 0)
     {
