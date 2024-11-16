@@ -36,7 +36,10 @@
 <script>
     // tambahkan untuk delete cookie innerHeight terlebih dahulu
     document.cookie = "innerHeight=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    
+    document.addEventListener("DOMContentLoaded", function() {
+        notaKecil('{{ route('transaksi.nota_kecil') }}', 'Nota Kecil');
+    });
+
     function notaKecil(url, title) {
         popupCenter(url, title, 625, 500);
     }

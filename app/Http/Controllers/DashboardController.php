@@ -46,5 +46,10 @@ class DashboardController extends Controller
         } else {
             return view('kasir.dashboard');
         }
+
+        // return response()->json([
+        //     'pendapatan' => $data_pendapatan,
+        //     'tanggal' => $data_tanggal
+        // ]);
     }
 }

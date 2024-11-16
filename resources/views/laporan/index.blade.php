@@ -27,6 +27,7 @@
                         <th width="5%">No</th>
                         <th>Tanggal</th>
                         <th>Penjualan</th>
+                        <th>Penyewaan</th>
                         <th>Pembelian</th>
                         <th>Pengeluaran</th>
                         <th>Pendapatan</th>
@@ -58,6 +59,7 @@
                 {data: 'DT_RowIndex', searchable: false, sortable: false},
                 {data: 'tanggal'},
                 {data: 'penjualan'},
+                {data: 'penyewaan'},
                 {data: 'pembelian'},
                 {data: 'pengeluaran'},
                 {data: 'pendapatan'}

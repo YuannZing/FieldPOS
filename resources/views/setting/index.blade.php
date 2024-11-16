@@ -68,7 +68,7 @@
                             <span class="help-block with-errors"></span>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row hidden">
                         <label for="tipe_nota" class="col-lg-2 control-label">Tipe Nota</label>
                         <div class="col-lg-2">
                             <select name="tipe_nota" class="form-control" id="tipe_nota" required>
@@ -139,7 +139,7 @@
 
                 $('.tampil-logo').html(`<img src="{{ url('/') }}${response.path_logo}" width="200">`);
                 $('.tampil-kartu-member').html(`<img src="{{ url('/') }}${response.path_kartu_member}" width="300">`);
-                $('[rel=icon]').attr('href', `{{ url('/') }}/${response.path_logo}`);
+                // $('[rel=icon]').attr('href', `{{ url('/') }}/${response.path_logo}`);
             })
             .fail(errors => {
                 alert('Tidak dapat menampilkan data');
